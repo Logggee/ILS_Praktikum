@@ -9,8 +9,7 @@ def getKNearestNeighbors(x,X,k=1):  # realizes nearest neighbor search of x in d
     :param k: number of nearest-neighbors to be returned
     :return: return list of k line indixes referring to the k nearest neighbors of x in X
     """
-    d=[]                   # REPLACE! compute list of Euklidean distances between x and X[i]
-    return k*[0]           # REPLACE! return indexes of k smallest distances     
+    return np.argsort([np.linalg.norm(x - i) for i in X])[:2]           # REPLACE! return indexes of k smallest distances     
 
 # ***** MAIN PROGRAM ********
 
