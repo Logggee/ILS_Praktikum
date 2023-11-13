@@ -17,7 +17,6 @@ def getGaussData2D(N,mu1,mu2,Sig11,Sig22,Sig12,t=0,C=2,flagOneHot=0):
     """
     mu=np.array([mu1,mu2])                            # define expectation vector of Gaussian
     Sig=np.array([[Sig11,Sig12],[Sig12,Sig22]])       # define covariance matrix of Gaussian
-    #X  =np.zeros((N,2))                               # !!!!!! REPLACE THIS !!!!!!!
     np.random.seed(13)                                # set seed for random generator
     X = np.random.multivariate_normal(mu, Sig, N)     # genarate random gausian distributed 2D Vectors
     if flagOneHot:
