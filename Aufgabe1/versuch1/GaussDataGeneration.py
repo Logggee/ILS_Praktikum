@@ -33,12 +33,12 @@ def getGaussData2D(N,mu1,mu2,Sig11,Sig22,Sig12,t=0,C=2,flagOneHot=0):
 # **************************************************
 if __name__ == '__main__':
     # (i) specify data parameters
-    N1     = 10                    # number of data samples from class 1
+    N1     = 5                    # number of data samples from class 1
     mu1    = np.array([2,1])       # mean vector for class 1
     Sigma1 = np.array([[1.0,0.1],        
                        [0.1,2.0]]) # covariance matrix for class 1
 
-    N2     = 15                    # number of data samples from class 2
+    N2     = 8                    # number of data samples from class 2
     mu2    = np.array([1,2])       # mean vector for class 2
     Sigma2 = np.array([[2.0,0.2],        
                        [0.2,1.0]]) # covariance matrix for class 2
