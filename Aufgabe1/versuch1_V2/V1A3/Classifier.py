@@ -203,7 +203,7 @@ class KernelMLPClassifier(Classifier):
             T_onehot=np.zeros((len(X),self.C),'int')   # allocate space for one-hot-vectors
             for n in range(len(X)): T_onehot[n,T[n]]=1 # set one hot components
             T=T_onehot                                 # replace T by one-hot label matrix
-        self.Wz=None      # !!REPLACE!! weight matrix from input to hidden layer corresponds to input data matrix
+        self.Wz = X      # !!REPLACE!! weight matrix from input to hidden layer corresponds to input data matrix
         self.K=None       # !!REPLACE!! Gram matrix
         self.Wy=None      # !!REPLACE!! weight matrix from hidden to output layer 
         

@@ -1,4 +1,7 @@
 # Ausarbeitung Versuch 1 ILS
+## Aufgabe 1
+### a
+
 ## Aufgabe 2
 ### a
 Der Abstrakte Konstrukter der Klasse Classifier, übergibt den Paramter C an sein Attribut C. C legt die anzahl an möglichen Klassen fest, in die die Daten unterteilt werden können.
