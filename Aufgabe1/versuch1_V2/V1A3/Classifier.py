@@ -156,7 +156,7 @@ class FastKNNClassifier(Classifier):
         :returns: - 
         """
         KNNClassifier.fit(self,X,T)                # call to parent class method (just store X and T)
-        self.kdtree = None                         # !!REPLACE!! do an indexing of the feature vectors by constructing a kd-tree
+        self.kdtree = scipy.spatial.KDTree(X)      # !!REPLACE!! do an indexing of the feature vectors by constructing a kd-tree
         
     def predict(self,x,K=None):
         """ 
@@ -168,8 +168,8 @@ class FastKNNClassifier(Classifier):
         :returns idxKNN: indexes of the K nearest neighbors (ordered w.r.t. ascending distance) 
         """
         if K==None: K=self.K                          # use default parameter K?
-        idxKNN = range(K)                             # !!REPLACE!! get indexes of K nearest neighbors of x from kd-tree
-        if K==1: idxKNN = [idxKNN[0]]                 # !!REPLACE!! in case K=1 cast (single) nearest neighbor index nn as a list idxNN
+        idxKNN = self.kdtree.query(x, K)[1]            # !!REPLACE!! get indexes of K nearest neighbors of x from kd-tree
+        if K==1: idxKNN = np.array([idxKNN])           # !!REPLACE!! in case K=1 cast (single) nearest neighbor index nn as a list idxNN
         return KNNClassifier.predict(self,x,K,idxKNN) # return predicted class, a-posteriori-distribution, and indexes of nearest neighbors (as in naive KNN)
 
 # ----------------------------------------------------------------------------------------- 
