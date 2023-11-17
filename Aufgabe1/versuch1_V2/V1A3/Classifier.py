@@ -119,9 +119,13 @@ class KNNClassifier(Classifier):
         :returns idxKNN: indexes of the K nearest neighbors (ordered w.r.t. ascending distance) 
         """
         if K      is None: K      = self.K                                   # use default parameter K?
-        if idxKNN is None: idxKNN = None                                     # !!REPLACE!! get indexes of k nearest neighbors of x (in case idxKNN is not already defined)
-        pc     = np.ones(self.C)/self.C                                      # !!REPLACE!! get a-posteriori class probabilities
-        y_hat  = 0                                                           # !!REPLACE!! make class decision
+        if idxKNN is None:
+           idxKNN = np.argsort([np.linalg.norm(x - i) for i in X])[:K]         # !!REPLACE!! get indexes of k nearest neighbors of x (in case idxKNN is not already defined)
+        valuesKNN, countsKNN = np.unique([T[i] for i in idxKNN], return_counts=True)
+        valuesT, countsT = np.unique(T, return_counts=True)
+        pc = valuesKNN.size/valuesT.size                                    # !!REPLACE!! get a-posteriori class probabilities
+        P = dict(zip(valuesKNN, countsKNN))
+        y_hat  =  max(P, key=lambda k: (P[k], -list(P.keys()).index(k)))     # !!REPLACE!! make class decision
         return y_hat, pc, idxKNN  # return predicted class, a-posteriori-distribution, and indexes of nearest neighbors
 
 
