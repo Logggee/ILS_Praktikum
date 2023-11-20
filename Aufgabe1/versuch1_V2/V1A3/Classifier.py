@@ -120,9 +120,9 @@ class KNNClassifier(Classifier):
         """
         if K      is None: K      = self.K                                   # use default parameter K?
         if idxKNN is None:
-           idxKNN = np.argsort([np.linalg.norm(x - i) for i in X])[:K]         # !!REPLACE!! get indexes of k nearest neighbors of x (in case idxKNN is not already defined)
-        valuesKNN, countsKNN = np.unique([T[i] for i in idxKNN], return_counts=True)
-        valuesT, countsT = np.unique(T, return_counts=True)
+           idxKNN = np.argsort([np.linalg.norm(x - i) for i in self.X])[:K]         # !!REPLACE!! get indexes of k nearest neighbors of x (in case idxKNN is not already defined)
+        valuesKNN, countsKNN = np.unique([self.T[i] for i in idxKNN], return_counts=True)
+        valuesT, countsT = np.unique(self.T, return_counts=True)
         pc = valuesKNN.size/valuesT.size                                    # !!REPLACE!! get a-posteriori class probabilities
         P = dict(zip(valuesKNN, countsKNN))
         y_hat  =  max(P, key=lambda k: (P[k], -list(P.keys()).index(k)))     # !!REPLACE!! make class decision
@@ -216,7 +216,7 @@ class KernelMLPClassifier(Classifier):
         :returns y: Dendritic potential (=firing rates) of linear output layer
         :returns None: dummy 
         """
-        z=None                        # !!REPLACE!! firing rates of hidden layer z
+        z=np.tanh(self.K)             # !!REPLACE!! firing rates of hidden layer z Formel Skript Seite 48
         y=None                        # !!REPLACE!! dendritic potentials = firing rates in output layer y
         y_hat=np.argmax(y)            # select class with maximum potential as winner class
         return y_hat,y,None 

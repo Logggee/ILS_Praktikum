@@ -17,12 +17,12 @@ def getGaussData2D(N,mu1,mu2,Sig11,Sig22,Sig12,t=0,C=2,flagOneHot=0):
     """
     mu=np.array([mu1,mu2])                            # define expectation vector of Gaussian
     Sig=np.array([[Sig11,Sig12],[Sig12,Sig22]])       # define covariance matrix of Gaussian
-    X  =np.zeros((N,2))                               # get data matrix        !!! REPLACE THIS !!!  
+    X = np.random.multivariate_normal(mu, Sig, N)     # genarate random gausian distributed 2D Vectors
     if flagOneHot:
-        T=np.zeros((N,nClasses),'int')                # allocate target matrix
+        T=np.zeros(N,nClasses)                        # allocate target matrix
         T[:,t]=1;                                     # set one-hot-entry of current class to 1
     else:
-        T=np.zeros(N,'int')                           # allocate target vector
+        T=np.zeros(N)                                 # allocate target vector
         T[:]=t                                        # set to target value
     return X,T                                        # return data matrix and target matrix
 
