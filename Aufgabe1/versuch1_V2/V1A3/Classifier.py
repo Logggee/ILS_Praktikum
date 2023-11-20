@@ -203,9 +203,9 @@ class KernelMLPClassifier(Classifier):
             T_onehot=np.zeros((len(X),self.C),'int')   # allocate space for one-hot-vectors
             for n in range(len(X)): T_onehot[n,T[n]]=1 # set one hot components
             T=T_onehot                                 # replace T by one-hot label matrix
-        self.Wz = X      # !!REPLACE!! weight matrix from input to hidden layer corresponds to input data matrix
-        self.K=None       # !!REPLACE!! Gram matrix
-        self.Wy=None      # !!REPLACE!! weight matrix from hidden to output layer 
+        self.Wz = X                                     # !!REPLACE!! weight matrix from input to hidden layer corresponds to input data matrix
+        self.K= np.dot(X, X.T)                          # !!REPLACE!! Gram matrix
+        self.Wy=np.dot(T.T, np.linalg.inv(np.tanh(self.K)))# !!REPLACE!! weight matrix from hidden to output layer 
         
     def predict(self,x):
         """ 
@@ -261,7 +261,7 @@ if __name__ == '__main__':
     # (iv) Do the same with the KernelMLPClassifier 
     kernelMLPc = KernelMLPClassifier(C)     # construct Kernel-MLP Classifier
     kernelMLPc.fit(X,T)                     # train with given data 
-    yhat,y,dummy=kernelMLPc.predict(x,K)    # classify
+    yhat,y,dummy=kernelMLPc.predict(x)    # classify
     print("\nClassification with the Kernel-MLP:")
     print("Test vector is most likely from class y_hat=",yhat)
     print("Model outputs y=",y) 
@@ -272,4 +272,3 @@ if __name__ == '__main__':
     print("\nCrossValidation with S=",S," for KNN-Classifier:")
     print("err=",err)
     print("matCp=",matCp)
-    
