@@ -1,39 +1,22 @@
 import numpy as np
 
-def getKNearestNeighbors(x,X,K=1):  
+def getKNearestNeighbors(x,X,k=1):  # realizes nearest neighbor search of x in database
     """
-    compute the K nearest neighbors for a query vector x given a data matrix X
+    compute the k nearest neighbors for a query vector x given a data matrix X
     :param x: the query vector x
     :param X: the N x D data matrix (in each row there is data vector) as a numpy array
-    :param K: number of nearest-neighbors to be returned
-    :return: return list of K row indexes referring to the K nearest neighbors of x in X
+    :param k: number of nearest-neighbors to be returned
+    :return: return list of k line indixes referring to the k nearest neighbors of x in X
     """
-    d=[]                          # !!REPLACE!! compute list of Euklidean distances between x and X[i]
-    return np.array(K*[0],'int')  # !!REPLACE!! return indexes of k smallest distances     
+    return np.argsort([np.linalg.norm(x - i) for i in X])[:k]           # REPLACE! return indexes of k smallest distances 
 
-def getClassProbabilities(t,C):     
-    """
-    compute class probabilities for given target/label list
-    :param t: list of target values/labels (e.g., of the K nearest neighbors computed with getKNearestNeighbors(.) t[i] must be between 0 and C-1
-    :param C: number of classes
-    :return P: P is list of class probabilities (length C) 
-    """
-    assert min(t)>=0 and max(t)<C, "t must be list of integer labels between 0 and C-1"
-    P=np.zeros(C)   # allocate array for class probabilities (length = number of classes)
-    P[:]=1.0/C      # !!REPLACE!! P[c] should be the probability for class c=0,1,2,...,C-1 for the label list t
-    return P        # return class distribution
+def getClassProbabilities(t):
+    values, counts = np.unique(t, return_counts=True)
+    amountOfEachClass = dict(zip(values, counts))
+    return  dict(zip(values, [(amountOfEachClass[x] / len(t)) * 100  for x in amountOfEachClass])) #Prozentuale vorkommniswarscheinlichkeit der Klassen
 
-def classify(P): 
-    """
-    classify for class distribution P, i.e., select most probable class
-    if several classes have the same probability then choose at random
-    :param P: array of class probabilities (length = number of classes), e.g., computed by getClassProbabilities(.)
-    :return c: class decision (index of the most probable class)
-    """
-    idx_maxP=[0]              # !!REPLACE!! get list of most likely classes (having maximum probability)
-    if len(idx_maxP)>1: c=0   # !!REPLACE!! if more than one maximum class then choose at random
-    else: c=0                 # !!REPLACE!! else choose unique class having maximal probability
-    return c                  # return class decision (between 0 and C-1, i.e., index in P)
+def classify(P):
+    return max(P, key=lambda k: (P[k], -list(P.keys()).index(k))) #sortiert das dict nach den values und holt sich dann den letzten key 
 
 # *****************************************************************************
 # ***** MAIN PROGRAM: Test nearest neighbor search and classification  ********
@@ -62,7 +45,7 @@ if __name__ == '__main__':
         print("The", i+1, "th nearest neighbor is: X[",idx,"]=",X[idx]," with distance ", np.linalg.norm(X[idx]-x)," and class label ",t[idx])
 
     # (iv) do classification
-    P=getClassProbabilities(t[idx_KNN],C=3)                # get class probabilities for input x
+    P=getClassProbabilities(t)                # get class probabilities for input x
     c=classify(P)                                          # get most likely class
         
     print("Class distribution P=",P)
