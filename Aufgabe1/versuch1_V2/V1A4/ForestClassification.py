@@ -4,19 +4,19 @@ from time import perf_counter
 from Classifier import *
 
 def hz_sgn_sqrt(x):
-    return x                         # !!REPLACE!! 
+    return np.sign(x) * np.sqrt(np.absolute(x))             # !!REPLACE!! 
 
 def hz_sgn_log(x):
-    return x                         # !!REPLACE!! 
+    return np.sign(x) * np.log10(1 + np.absolute(x))        # !!REPLACE!! 
 
 def hz_sgn_square(x):
-    return x                         # !!REPLACE!!
+    return np.sign(x) * (x ** 2)                            # !!REPLACE!!
 
 def hz_cubic(x):
-    return x                         # !!REPLACE!! 
+    return x ** 3                                           # !!REPLACE!! 
 
 # (I) Load data 
-forestdata  = pd.read_csv('../../DATA/ForestTypes/ForestTypesData.csv'); # load data as pandas data frame 
+forestdata  = pd.read_csv('training.csv'); # load data as pandas data frame 
 classlabels = ['s','h','d','o'];                                      # possible class labels (C=4) 
 classidx    = {classlabels[i]:i for i in range(len(classlabels))}     # dict for mapping classlabel to index 
 C           = len(classlabels)        # number of classes (Note: K is now the number of nearest-neighbors!!!!!!)
