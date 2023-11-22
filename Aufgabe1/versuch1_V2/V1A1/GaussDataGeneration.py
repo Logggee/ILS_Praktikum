@@ -27,6 +27,12 @@ def getGaussData2D(N,mu1,mu2,Sig11,Sig22,Sig12,t=0,C=2,flagOneHot=0):
         T[:]=t                                        # set to target value
     return X,T                                        # return data matrix and target matrix
 
+def ApproxMean(X=0):
+    return np.mean(X, axis=0)
+
+def ApproxCovariance(X=0):
+    return np.cov(X)
+
 
 # **************************************************
 # ***** MAIN PROGRAM: Test data generation  ********
@@ -34,12 +40,12 @@ def getGaussData2D(N,mu1,mu2,Sig11,Sig22,Sig12,t=0,C=2,flagOneHot=0):
 if __name__ == '__main__':
     # (i) specify data parameters
     N1     = 5                    # number of data samples from class 1
-    mu1    = np.array([2,1])       # mean vector for class 1
+    mu1    = np.array([1,2])       # mean vector for class 1
     Sigma1 = np.array([[1.0,0.1],        
                        [0.1,2.0]]) # covariance matrix for class 1
 
     N2     = 8                    # number of data samples from class 2
-    mu2    = np.array([1,2])       # mean vector for class 2
+    mu2    = np.array([2,1])       # mean vector for class 2
     Sigma2 = np.array([[2.0,0.2],        
                        [0.2,1.0]]) # covariance matrix for class 2
 
@@ -53,3 +59,6 @@ if __name__ == '__main__':
     
     print("X=",X)
     print("T=",T)
+
+    print("ApproxMean: ", ApproxMean(X))
+    print("ApproxCovariance: ", ApproxCovariance(X))

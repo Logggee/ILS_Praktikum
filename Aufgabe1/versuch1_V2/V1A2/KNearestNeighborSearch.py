@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
     # (iv) do classification
     P=getClassProbabilities(t)                # get class probabilities for input x
-    c=classify(P)                                          # get most likely class
+    c=classify(P)                             # get most likely class
         
     print("Class distribution P=",P)
     print("Most likely class: c=",c," with P(c)=",P[c])

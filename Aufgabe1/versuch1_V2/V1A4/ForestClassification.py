@@ -16,7 +16,7 @@ def hz_cubic(x):
     return x ** 3                                           # !!REPLACE!! 
 
 # (I) Load data 
-forestdata  = pd.read_csv('training.csv'); # load data as pandas data frame 
+forestdata  = pd.read_csv('/home/jan/Studium/Semester5/ILS/ILS_Praktikum/Aufgabe1/versuch1_V2/V1A4/training.csv'); # load data as pandas data frame 
 classlabels = ['s','h','d','o'];                                      # possible class labels (C=4) 
 classidx    = {classlabels[i]:i for i in range(len(classlabels))}     # dict for mapping classlabel to index 
 C           = len(classlabels)        # number of classes (Note: K is now the number of nearest-neighbors!!!!!!)
@@ -32,8 +32,8 @@ print("T[0..9]=\n",T[0:10])
 
 # (II) Test KNN-classifier with grid search on S-fold cross validation and K
 if 1:
-    S_list=[3]                            # parameter S for cross validation
-    K_list=[1]                            # number K of nearest neighbors 
+    S_list=[5]                            # parameter S for cross validation
+    K_list=[3]                            # number K of nearest neighbors 
     accuracy = np.zeros((len(S_list),len(K_list)));   # array to save accuracy of classifier for each value of S and K
     minerr,bestS,bestK=1.0,-1,-1
     for i in range(len(S_list)):
@@ -41,8 +41,10 @@ if 1:
         for j in range(len(K_list)):
             K=K_list[j]
             t1=perf_counter()              # start time
-            knnc = 0                       # !!REPLACE!! create KNN classifier with kd-trees 
-            err,Cp = 1.0,0                 # !!REPLACE!! do S-fold cross validation for data X,T
+            knnc = FastKNNClassifier(C, K)          # !!REPLACE!! create KNN classifier with kd-trees
+            knnc.fit(X, T)
+            classifier = Classifier(C) 
+            err,Cp = classifier.crossvalidate(S, X, T)   # !!REPLACE!! do S-fold cross validation for data X,T
             t2=perf_counter()              # end time
             time_comp=t2-t1                # computing time in seconds
             print("\nS=",S," fold cross validation using the",K,"-NNClassifier with KD-Trees yields the following results:")
