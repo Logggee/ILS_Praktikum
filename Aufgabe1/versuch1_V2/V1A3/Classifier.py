@@ -202,7 +202,7 @@ class KernelMLPClassifier(Classifier):
         if len(T.shape)==1:
             T_onehot=np.zeros((len(X),self.C),'int')   # allocate space for one-hot-vectors
             for n in range(len(X)): T_onehot[n,T[n]]=1 # set one hot components
-            T=T_onehot                                 # replace T by one-hot label matrix
+            T=T_onehot                                  # replace T by one-hot label matrix
         self.Wz = X                                     # !!REPLACE!! weight matrix from input to hidden layer corresponds to input data matrix
         self.K= np.dot(X, X.T)                          # !!REPLACE!! Gram matrix
         self.Wy=np.dot(T.T, np.linalg.inv(np.tanh(self.K)))# !!REPLACE!! weight matrix from hidden to output layer 
@@ -216,8 +216,8 @@ class KernelMLPClassifier(Classifier):
         :returns y: Dendritic potential (=firing rates) of linear output layer
         :returns None: dummy 
         """
-        z=np.tanh(self.K)             # !!REPLACE!! firing rates of hidden layer z Formel Skript Seite 48
-        y=None                        # !!REPLACE!! dendritic potentials = firing rates in output layer y
+        z=np.tanh(np.dot(self.Wz, x))             # !!REPLACE!! firing rates of hidden layer z Formel Skript Seite 48
+        y= np.dot(self.Wy, z)                     # !!REPLACE!! dendritic potentials = firing rates in output layer y
         y_hat=np.argmax(y)            # select class with maximum potential as winner class
         return y_hat,y,None 
 

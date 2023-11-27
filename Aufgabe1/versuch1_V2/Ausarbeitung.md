@@ -41,3 +41,21 @@ Die Methode Crossvalidate teilt die Daten in S Teile auf. Der Parameter X ist f�
 2 Durchlauf: x[8], x[2], x[4]
 3 Durchlauf: x[7], x[5], x[6]
 * Der Returnwert err ist der prediction error, die Formel dafür befindet sich auf Seite 115 Nummer 2.108 (FP + FN) / (TP + FP + FN + TN). Der Returnwert MatCp ist die Confusion Matrix welche die Werte False Positive (FP), False Negative (FN), True Positive (TP) und True Negative (TN) enthält.
+
+### f)
+![Aufgabe 3f](BilderAusarbeitung/Aufgabe3f.png)
+
+### g)
+![Aufgabe 3g KNN](BilderAusarbeitung/Aufgabe3gKNN.png)
+Der kleineste Error, wurde mit K = 15 erreicht.
+![Aufgabe 3g MLP](BilderAusarbeitung/Aufgabe3gMLP.png)
+* Was passiert im Fall vieler Daten (N1, N2 groß), falls die Daten gut getrennt sind
+gegenüber dem Fall wenn die Daten stark überlappen?
+    * Bei vielen Daten kann die Invertierung der Gram-matrix sehr aufwändig werden. O(n^3) Rechenschritte.
+
+* Warum funktioniert KernelMLP im letzteren Fall nicht so gut?
+    * Wenn die Daten stark überlappen, wird die Aufgabe für das Modell schwieriger. In diesem Fall kann es schwieriger sein, klare Trennlinien zwischen den Klassen zu ziehen. KernelMLP kann in diesem Szenario möglicherweise nicht so gut funktionieren, weil es möglicherweise Schwierigkeiten hat, die komplexen nicht-linearen Muster zu erfassen, die durch die Überlappung entstehen. Modelle mit nicht-linearen Kernen können in solchen Fällen anfälliger für Overfitting sein.
+* Vergleichen Sie für die Datenparameter von Aufg.1c die Laufzeiten der drei Verfahren für Kreuzvalidierung für Datenzahl N = 10, 100, 1000 (mit N1 = N2 = N /2). Tragen Sie die Werte jeweils in ein Schaubild ein.
+![Aufgabe 3g Graph](BilderAusarbeitung/Aufgabe3gGraph)
+
+## Aufgabe 4
