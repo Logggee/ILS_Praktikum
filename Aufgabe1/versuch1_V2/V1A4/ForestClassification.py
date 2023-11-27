@@ -31,9 +31,9 @@ print("T_txt[0..9]=\n",T_txt[0:10])
 print("T[0..9]=\n",T[0:10])
 
 # (II) Test KNN-classifier with grid search on S-fold cross validation and K
-if 1:
-    S_list=[5]                            # parameter S for cross validation
-    K_list=[3]                            # number K of nearest neighbors 
+if 0:
+    S_list=[2, 3, 5, 10]                            # parameter S for cross validation
+    K_list=[1, 3, 5, 7, 9, 11]                            # number K of nearest neighbors 
     accuracy = np.zeros((len(S_list),len(K_list)));   # array to save accuracy of classifier for each value of S and K
     minerr,bestS,bestK=1.0,-1,-1
     for i in range(len(S_list)):
@@ -43,8 +43,7 @@ if 1:
             t1=perf_counter()              # start time
             knnc = FastKNNClassifier(C, K)          # !!REPLACE!! create KNN classifier with kd-trees
             knnc.fit(X, T)
-            classifier = Classifier(C) 
-            err,Cp = classifier.crossvalidate(S, X, T)   # !!REPLACE!! do S-fold cross validation for data X,T
+            err,Cp = knnc.crossvalidate(S, X, T)   # !!REPLACE!! do S-fold cross validation for data X,T
             t2=perf_counter()              # end time
             time_comp=t2-t1                # computing time in seconds
             print("\nS=",S," fold cross validation using the",K,"-NNClassifier with KD-Trees yields the following results:")
@@ -63,9 +62,9 @@ if 1:
 #exit(0)
 
 # (III) Test KernelMLP classifier with grid search on S-fold cross validation and K
-if 0:
-    S_list=[3]                         # parameter S for cross validation
-    hz_list=[hz_sgn_sqrt]              # activation functions in hidden layer  
+if 1:
+    S_list=[2, 3, 5, 10]                     # parameter S for cross validation
+    hz_list=[hz_sgn_sqrt, hz_sgn_log, hz_sgn_square, hz_cubic] # activation functions in hidden layer  
     accuracy = np.zeros((len(S_list),len(hz_list)));   # array to save accuracy of classifier for each value of S and K
     minerr,bestS,best_hz=1.0,None,None
     for i in range(len(S_list)):
@@ -74,7 +73,13 @@ if 0:
             hz=hz_list[j]
             print("S=",S,"hz=",hz)
             #!!REPLACE/INSERT YOUR CODE!!
+            mpl = KernelMLPClassifier(C, hz)
+            mpl.fit(X, T)
+            err, Cp = mpl.crossvalidate(S, X, T)
+            if err < minerr:
+                minerr = err
+                bestS = S
+                best_hz = hz
     print("\naccuracy=\n",accuracy)
     print("\np_classerror=\n",1.0-accuracy)
     print("\nmininmal err=",minerr," for S=",bestS,"hz=",best_hz)
-

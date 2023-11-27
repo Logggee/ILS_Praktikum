@@ -59,3 +59,19 @@ gegenüber dem Fall wenn die Daten stark überlappen?
 ![Aufgabe 3g Graph](BilderAusarbeitung/Aufgabe3gGraph)
 
 ## Aufgabe 4
+### b)
+![Aufgabe 4b](BilderAusarbeitung/Aufgabe4b.png)
+
+### c)
+Für S=10 und K=9 hatten wir einen Error von 0. Das zweit beste Ergebniss wurde mit S=10 und K=1 erreicht, hier beträgt der Error nur 0,005.
+![Aufgabe 4c](BilderAusarbeitung/Aufgabe4c.png)
+
+### d)
+* eim Verwenden von hz = tanh geht etwas schief. Warum? Was kann man dagegen tun?
+    * tanh hat den Sättigungsbereich bei 1 und -1. Wenn die Dentritischen Potentiale a große Werte annehmen, dann ist man im Sättigungsbereich der tanh Funktion, welche dann immer 1 oder -1 aus Funktionswert ausgibt. In der Ergebnissmatrix sind dann nur gleiche Vektoren zu finden. Sobald in mehreren Zeilen eine 1 zu finden ist, ist die Matrix Linear abhängig und kann nicht mehr Invertiert werden. Um dies zu verhindern können andere Aktivierungsfunktionen verwendet werden, wie die Kubische Funktion x^3 zum Beispiel.
+![Aufgabe 4d](BilderAusarbeitung/Aufgabe4d.png)
+
+### e)
+
+### f)
+Bei KNN wird angenommen das ähnliche Daten im Merkmalsraum nahe beieinander liegen. Wenn dies nicht der Fall ist kann es zu Problemen kommen, da die berechneten Distanzen dann sehr lange sein können. Um dieses Problem zu beheben müssen in diesem Fall die Trainingsdaten Normalisiert werden.
