@@ -56,7 +56,7 @@ gegenüber dem Fall wenn die Daten stark überlappen?
 * Warum funktioniert KernelMLP im letzteren Fall nicht so gut?
     * Wenn die Daten stark überlappen, wird die Aufgabe für das Modell schwieriger. In diesem Fall kann es schwieriger sein, klare Trennlinien zwischen den Klassen zu ziehen. KernelMLP kann in diesem Szenario möglicherweise nicht so gut funktionieren, weil es möglicherweise Schwierigkeiten hat, die komplexen nicht-linearen Muster zu erfassen, die durch die Überlappung entstehen. Modelle mit nicht-linearen Kernen können in solchen Fällen anfälliger für Overfitting sein.
 * Vergleichen Sie für die Datenparameter von Aufg.1c die Laufzeiten der drei Verfahren für Kreuzvalidierung für Datenzahl N = 10, 100, 1000 (mit N1 = N2 = N /2). Tragen Sie die Werte jeweils in ein Schaubild ein.
-![Aufgabe 3g Graph](BilderAusarbeitung/Aufgabe3gGraph)
+![Aufgabe 3g Graph](BilderAusarbeitung/Aufgabe3gGraph.png)
 
 ## Aufgabe 4
 ### b)
