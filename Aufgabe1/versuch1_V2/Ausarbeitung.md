@@ -1,4 +1,4 @@
-# Ausarbeitung Versuch 1 ILS
+# Ausarbeitung Versuch 1 ILS Jan Holderied und Martin Goien
 ## Aufgabe 1
 ### b)
 ![Aufgabe 1b](BilderAusarbeitung/Aufgabe1b.png)
