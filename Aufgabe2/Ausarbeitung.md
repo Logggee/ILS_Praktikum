@@ -13,3 +13,29 @@
 * ![Aufgabe 1b) Punkt 2](BilderAusarbeitung/1bPunkt2.png)
 * Es gibt $\binom{D+m-1}{m}$ viele Basisfunktionen vom Grad m.
 * phi_poly2D([1,2])= [ 1  2  1  4  2  1  8  4  2  1 16  8  4  2  1]
+
+## Aufgabe 2
+### a)
+* Es gibt folgende Klassen im Modul Regression:
+    * DataScaler: Klasse um Datenvektoren zu standardisieren.
+    * KNNRegressifier: Klasse für K-Nearest-Neighbor-Regressions Verfahren mit Hilfe von KD-Trees.
+    * LSRRegressifier: Klasse für Least Squares Regression, Summe der Fehlerquadrate.
+    * Regressifier: Abstrakte Basisklasse. Obige Regressionsklassen erben von dieser Klasse.
+* Die Methoden der Basisklasse Regression sind folgende:
+    * fit(): Die Methode fit Trainiert das Regressionsmodell mit den Trainigsdaten Matrix X und den Zieldaten Matrix T
+    * predict(): Bekommt als Parameter einen neuen Datenvektor x, für den dann ein Zielvektor berechnet werden soll.
+    * crossvalidate(): Macht eine Kreuzvalidierung. Parameter S bestimmt in wie viele Teile die Daten X unterteilt werden sollen. X ist die Trainingsdaten Matrix. T ist die Zeilwerte Matrix. Dist(t) berechnet die länge jedes einzelnen Vektors t, default ist die Euklidische Distanz.
+
+### b)
+* Die Klasse LSRRegressifier erzeugt ein Objekt, dass ein Regressionsverfahren auf Basis der Summe der Fehlerquadrate implementiert.
+* Die Parameter der Klasse LSRRegressidier:
+    * lmbda: Ist ein Regulariserungs Parameter. Dieser verhindert zu große Gewichte, zwingt viele Komponenten auf nahe 0, reduziert effektive Parameterzahl.
+    * phi: Basisfunktionen phi für lineare Regression, default ist ein Polynom mit Grad eins.
+    * flagsSTD: Ist ein Flag welches bei einem Wert von größer 0 aussagt, dass die Daten Standartisiert sind.
+    * eps: Maximal tolerierbarer Restwert, default ist $1*10^{-2}$
+* Die Klasse DataScaler dient dafür die Datenvektoren zu standardisieren.
+    * scale(): Methode standardisiert einen Vektor oder eine Matrix, auf Mittelwert 0 und Standartabweichung 1.
+    * unscale(): Diese Methode rechnet für einen Vektor oder eine Datenmatrix die Standardisierung wieder zurück, auf die uhrsprüngliche Verteilung.
+    * Dies ist wichtig um das Regressionsverfahren Numerisch Stabil zu halten.
+    * maxZ: Variable steht für die Maximal zulässige größe der Datenmatrix X, damit diese noch gut konditioniert ist.
+    * Z: Bei guter konditionierung wird Z zur null Matrix.

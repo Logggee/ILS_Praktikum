@@ -37,7 +37,7 @@ def get_phi_poly(d,m):   # return list of all polynomial basis functions for inp
 
 
 def evaluate_linear_model(W,phi,x):  # return linear model function y=w.T*phi(x) or y=W*phi(x); works for both cases
-    y=0                              # !!! REPLACE THIS !!!
+    y=np.dot(W,phi(x))                              # !!! REPLACE THIS !!!
     return y
 
 
