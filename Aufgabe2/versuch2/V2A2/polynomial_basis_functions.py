@@ -42,7 +42,7 @@ def evaluate_linear_model(W,phi,x):  # return linear model function y=w.T*phi(x)
 
 
 # *******************************************************
-# __main___
+# __main___>
 # Module test
 # *******************************************************
 

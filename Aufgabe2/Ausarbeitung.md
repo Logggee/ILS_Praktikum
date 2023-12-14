@@ -39,3 +39,18 @@
     * Dies ist wichtig um das Regressionsverfahren Numerisch Stabil zu halten.
     * maxZ: Variable steht für die Maximal zulässige größe der Datenmatrix X, damit diese noch gut konditioniert ist.
     * Z: Bei guter konditionierung wird Z zur null Matrix.
+
+### c)
+* Die Klasse KNNRegressifier berechnet ein Regression mit Hilfe des Fast K-Nearest Neighbors Modells. Es wird ein KD-Tree verwendet.
+* Wo zu dienen die Parameter:
+    * K: gibt die Anzahl der K-Neighbors an
+    * flagKLinReg: Wenn diese Variable >0 ist soll eine Lineare Least Squares Fehlerfunktionen auf die K-Neighbors angewandt werden. Bei = 0, soll einfach nur der Mittelwert der K-Neighbors Zielwerte Vektoren berechnet werden.
+* Als erstes werden die Indexe der K-Nearest Neighbors berechnet und in einer Liste abgelegt. Wenn das Flag flagKLinReg gleich null ist wird einfach der Mittelwert aus den Zielwerten berechnet. Wenn das Flag flagKLinReg größer null ist, wird aus den Daten ein Regressionsmodell erzeugt, mit Hilfe der Klasse LSRRegressifier. Danach wird der Zielwert des Datum x mit der predict Methode der Klasse LSRRegressifier brechnet. 
+
+### d)
+* Im Modultest werden als ertses alle nötigen wie Daten T und X erzeugt. T wird hier mir einem noise versehen. Ebenfalls wird die Merkmalsfunktion $\phi$ mit Dimensions 1 und Grad 2 erzeugt. Danach wird ein Objekt von LSRRegressifier erzeugt und Trainiert. Mit dem Trainierten LSRRegressifier wird nun eine prediction mit dem neuen Datum [3.1415] berechnet. Das Modell wird anschließend Kreuzvalidiert um einen mean absolute und einen mean absolute perecentage error zu berechnen. Anschliesen wird ein Objekt des KNNRegressifier erzeugt und dieses Trainiert. Hier wird ebenfall mit dem Datum [3.1415] eine prediction berechnet. Auch hier wird das Modell wieder Kreuzvalidiert.
+*
+* MAE $\triangleq$ mean absolute error, MAEP $\triangleq$ mean absolute percentage error
+    * MAE ist also der durchschnittliche Regressionsfehler der vom Modell gemacht wird
+    * MAEP ist der durchschnittliche Regressionsfehler in Prozent der vom Modell gemacht wird
+* 
