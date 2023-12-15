@@ -41,16 +41,40 @@
     * Z: Bei guter konditionierung wird Z zur null Matrix.
 
 ### c)
-* Die Klasse KNNRegressifier berechnet ein Regression mit Hilfe des Fast K-Nearest Neighbors Modells. Es wird ein KD-Tree verwendet.
-* Wo zu dienen die Parameter:
+* Die Klasse KNNRegressifier berechnet eine Regression mit Hilfe des Fast K-Nearest Neighbors Modell. Es wird ein KD-Tree verwendet.
+* Wozu dienen die Parameter:
     * K: gibt die Anzahl der K-Neighbors an
-    * flagKLinReg: Wenn diese Variable >0 ist soll eine Lineare Least Squares Fehlerfunktionen auf die K-Neighbors angewandt werden. Bei = 0, soll einfach nur der Mittelwert der K-Neighbors Zielwerte Vektoren berechnet werden.
-* Als erstes werden die Indexe der K-Nearest Neighbors berechnet und in einer Liste abgelegt. Wenn das Flag flagKLinReg gleich null ist wird einfach der Mittelwert aus den Zielwerten berechnet. Wenn das Flag flagKLinReg größer null ist, wird aus den Daten ein Regressionsmodell erzeugt, mit Hilfe der Klasse LSRRegressifier. Danach wird der Zielwert des Datum x mit der predict Methode der Klasse LSRRegressifier brechnet. 
+    * flagKLinReg: Wenn diese Variable > 0 ist, soll eine Lineare Least Squares Fehlerfunktionen auf die K-Neighbors angewandt werden. Bei = 0, soll einfach nur der Mittelwert der K-Neighbors Zielwerte Vektoren berechnet werden.
+* Als erstes werden die Indexe der K-Nearest Neighbors berechnet und in einer Liste abgelegt. Wenn das Flag flagKLinReg gleich null ist, wird einfach der Mittelwert aus den Zielwerten berechnet. Wenn das Flag flagKLinReg größer null ist, wird aus den Daten ein Regressionsmodell erzeugt, mit Hilfe der Klasse LSRRegressifier. Danach wird der Zielwert des Datum x mit der predict Methode der Klasse LSRRegressifier brechnet. 
 
 ### d)
-* Im Modultest werden als ertses alle nötigen wie Daten T und X erzeugt. T wird hier mir einem noise versehen. Ebenfalls wird die Merkmalsfunktion $\phi$ mit Dimensions 1 und Grad 2 erzeugt. Danach wird ein Objekt von LSRRegressifier erzeugt und Trainiert. Mit dem Trainierten LSRRegressifier wird nun eine prediction mit dem neuen Datum [3.1415] berechnet. Das Modell wird anschließend Kreuzvalidiert um einen mean absolute und einen mean absolute perecentage error zu berechnen. Anschliesen wird ein Objekt des KNNRegressifier erzeugt und dieses Trainiert. Hier wird ebenfall mit dem Datum [3.1415] eine prediction berechnet. Auch hier wird das Modell wieder Kreuzvalidiert.
-*
-* MAE $\triangleq$ mean absolute error, MAEP $\triangleq$ mean absolute percentage error
+* Im Modultest werden als ertses alle nötigen wie Daten T und X erzeugt. T wird hier mir einem noise versehen. Ebenfalls wird die Merkmalsfunktion $\phi$ mit Dimensions 1 und Grad 2 erzeugt. Danach wird ein Objekt von LSRRegressifier erzeugt und trainiert. Mit dem trainierten LSRRegressifier wird nun eine prediction mit dem neuen Datum [3.1415] berechnet. Das Modell wird anschließend kreuzvalidiert, um einen mean absolute und einen mean absolute perecentage error zu berechnen. Anschliesen wird ein Objekt des KNNRegressifier erzeugt und dieses trainiert. Hier wird ebenfall mit dem Datum [3.1415] eine prediction berechnet. Auch hier wird das Modell wieder kreuzvalidiert.
+* Es werden folgende Gewichte gelernt: $[w_0, w_1, w_2]$ mit der Prädiktionsfunktion $y(x,w)=w_0x^0+w_1x^1+w_2x^2$
+* MAE $\triangleq$ mean absolute error, MAPE $\triangleq$ mean absolute percentage error
     * MAE ist also der durchschnittliche Regressionsfehler der vom Modell gemacht wird
-    * MAEP ist der durchschnittliche Regressionsfehler in Prozent der vom Modell gemacht wird
-* 
+    * MAPE ist der durchschnittliche Regressionsfehler in Prozent der vom Modell gemacht wird
+* Die Funktionen custom_range erzeugt eine Liste mit den Werten [0, 0.1, 0.2, ..., 1, 2, ..., 10, 20,..., 100, 200, ..., 1000] diese Werte werden alle einmal als Hyperparamter lambda und k gestezt und der MAE berechnet. Für K wird erst aber größer gleich eins getestet. Die Auswertung dieses Test ergab die Optimalen Hyperparamter: lambda für LSR: lambda= 1.0 , MAE= 0.6384710845985233 und Bestes K für KNN: K= 1  MAE= 0.43.
+
+## AUfgabe 3
+### a)
+* Die N = 10 Trainingsdaten sind mit dem Abstand 0.11 zwischen 0 und 1 als Sinus verteilt. Dazu kommt ein Normalverteilter Noise der für jeden Datenpunkt dazu addiert wird. $f(x) = c*sin(2*\pi*f*X+\phi_0)+ \frac{1}{\sigma\sqrt{2\pi}}*e^{-0,5(\frac{x-\mu}{\sigma})^2}$
+* $lambda = lambda\_scale * (10^{lambda\_log10})$
+    * lambda_scale ist ein Skalierungsfaktor für den Regularisierungsparameter
+    * lmbda_log10 ist der logaryhthmus des Regularisierungsparameter
+* Die Unterschiedlichen Kurven stehen für folgendes:
+    * Blau gestrichelt Kurve: Ist die wahre Funktionskurve
+    * Rote Kurve: Ist die Least Squares Regression Modellkurve
+    * Blaue Kreuze: Sind die Trainingsdaten Punkte
+    * Gelben Kringel: Sind die Testdaten Punkte
+* Slider:
+    * Seed: Stellt den Seed für den Zufallszahlen Generator ein.
+    * N: Stellt die Anzahl an Datenpunkte für Training und Testen ein.
+    * sd_noise: Reguliert den Noise der auf die Daten addiert wird.
+* **Experiment 1 N = 10**: Ohne Regularisierung kommt es zum Overfitting, da der Polynomgrad nahe der Anzahl den Datenpunkte ist.
+    * Ohne Regularisierung: ![MAE Trainigs und Tetsdaten](BilderAusarbeitung/MAEivisit.png "Ohne Regularisierung")
+    * Lambda Optimiert LSR: ![Experiment 1 Optimierung LSR](BilderAusarbeitung/Experiment1LSR.png "Lambda Optimiert LSR")
+    * K Optimiert KNN: ![Experiment 1 Ptimierung KNN](BilderAusarbeitung/Experiment1KNN.png "K Optimiert KNN")
+    * Für die Datenmenge N = 10 funktioniert die LSR Regression besser.
+* **Experiment 2 N = 20**:
+    * Lambda Optimiert LSR: ![Experiment 2 Optimierung LSR](BilderAusarbeitung/Experiment2LSR.png "Lambda Optimiert LSR")
+    * K Optimiert KNN: ![Experiment 2 Ptimierung KNN](BilderAusarbeitung/Experiment2KNN.png "K Optimiert KNN")

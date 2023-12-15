@@ -227,6 +227,19 @@ class KNNRegressifier(Regressifier):
             self.regLSR.fit(self.X[idxNN],self.T[idxNN])   # train a linear regressifier using the KNN data
             y=self.regLSR.predict(x)                       # take prediction from regressifier
         return y
+    
+def custom_range():
+        for i in range(0, 11):
+            yield i / 10.0
+        
+        for i in range(1, 11):
+            yield i
+
+        for i in range(10, 101, 10):
+            yield i
+
+        for i in range(100, 1001, 100):
+            yield i
 
 
 # *******************************************************
@@ -260,7 +273,7 @@ if __name__ == '__main__':
     print("\n-----------------------------------------")
     print("Do a Least-Squares-Regression")
     print("-----------------------------------------")
-    lmbda=0;
+    lmbda=0
     lsr = LSRRegressifier(lmbda,phi)
     lsr.fit(X,T)
     print("lsr.W_LSR=",lsr.W_LSR)        # weight vector (should be approximately [w0,w1]=[4,2])
@@ -283,4 +296,39 @@ if __name__ == '__main__':
 
     # do S-fold crossvalidation
     MAE = knnr.crossvalidate(S,X,T)
-    print("KNNRegression cross-validation: MAE=",MAE[0],"MAPE=",MAE[1]) 
+    print("KNNRegression cross-validation: MAE=",MAE[0],"MAPE=",MAE[1],"\n") 
+ 
+    #Checking for the best Hyperparameter
+    ranges = list(custom_range())
+    optHyperParameterLSR = list()
+    optHyperParameterKNN = list()
+    
+    for hyper in ranges:
+        try:
+            lmbda=hyper
+            lsr = LSRRegressifier(lmbda,phi)
+            lsr.fit(X,T)
+
+            # do S-fold crossvalidation
+            S=3
+            MAE = lsr.crossvalidate(S,X,T)
+            optHyperParameterLSR.append((hyper ,MAE[0], MAE[1]))
+
+            S=3
+            MAE = lsr.crossvalidate(S,X,T)
+
+            if hyper >= 1:
+                K=hyper
+                knnr = KNNRegressifier(K)
+                knnr.fit(X,T)
+
+                # do S-fold crossvalidation
+                MAE = knnr.crossvalidate(S,X,T)
+                optHyperParameterKNN.append((hyper ,MAE[0], MAE[1])) 
+
+        except:
+            continue
+    print("LSR: ", optHyperParameterLSR, "\nKNN: ", optHyperParameterKNN)
+    minMaeLSR = min(optHyperParameterLSR, key=lambda x: x[1])
+    minMaeKNN = min(optHyperParameterKNN, key=lambda x: x[1])
+    print("Bestes lambda für LSR: lambda=", minMaeLSR[0],", MAE=", minMaeLSR[1], "\nBestes K für KNN: K=", minMaeKNN[0], " MAE=", minMaeKNN[1])

@@ -143,13 +143,14 @@ class LSRRegressifier(Regressifier):
         else: self.K=T.shape[1]
         try:
             # (ii.a) compute optimal least squares weights
-            PHI = None                                                    # !!! REPLACE THIS !!!  --> compute design matrix
-            PHIT_PHI_lmbdaI = None                                        # !!! REPLACE THIS !!!  --> compute PHI_T*PHI+lambda*I
-            PHIT_PHI_lmbdaI_inv = None                                    # !!! REPLACE THIS !!!  --> compute inverse matrix (may be bad conditioned and fail) 
-            self.W_LSR = None                                             # !!! REPLACE THIS !!!  --> regularized least squares weights
+            PHI = np.array([self.phi(x) for x in X])                       # !!! REPLACE THIS !!!  --> compute design matrix
+            test = np.dot(self.lmbda, np.identity(self.M))
+            PHIT_PHI_lmbdaI =  np.add(np.matmul(PHI.T, PHI), np.dot(self.lmbda, np.identity(self.M))) # !!! REPLACE THIS !!!  --> compute PHI_T*PHI+lambda*I
+            PHIT_PHI_lmbdaI_inv = np.linalg.inv(PHIT_PHI_lmbdaI)          # !!! REPLACE THIS !!!  --> compute inverse matrix (may be bad conditioned and fail) 
+            self.W_LSR = np.dot(PHIT_PHI_lmbdaI_inv, np.matmul(PHI.T, T))      # !!! REPLACE THIS !!!  --> regularized least squares weights
             # (ii.b) check numerical condition
-            Z=None                                                        # !!! REPLACE THIS !!! --> compute PHIT_PHI_lmbdaI*PHIT_PHI_lmbdaI_inv-I --> should become the zero matrix if good conditioned!
-            maxZ = 1000                                                   # !!! REPLACE THIS !!! --> compute maximum component of Z (<eps for good conditioned problem)
+            Z= np.subtract(np.matmul(PHIT_PHI_lmbdaI, PHIT_PHI_lmbdaI_inv), np.identity(self.M))  # !!! REPLACE THIS !!! --> compute PHIT_PHI_lmbdaI*PHIT_PHI_lmbdaI_inv-I --> should become the zero matrix if good conditioned!
+            maxZ = np.amax(Z)                                          # !!! REPLACE THIS !!! --> compute maximum component of Z (<eps for good conditioned problem)
             assert maxZ<=self.eps,"MATRIX INVERSION IS BAD CONDITIONED!"  # check if matrix inversion has good condition
         except:
             # (ii.c) if exception occurs then set weights to defaults (zeros) and print warning message
@@ -168,7 +169,7 @@ class LSRRegressifier(Regressifier):
         :returns: predicted target vector y of size K
         """
         if self.flagSTD>0: x=self.datascalerX.scale(x)    # scale x before computing the prediction?
-        y=0                                               # !!! REPLACE THIS !!! --> compute model prediction; you can use evaluate_linear_model(.) from module polynomial_basis_functions
+        y= evaluate_linear_model(self.W_LSR, self.phi, x) # !!! REPLACE THIS !!! --> compute model prediction; you can use evaluate_linear_model(.) from module polynomial_basis_functions
         if self.flagSTD>0: y=self.datascalerT.unscale(y)  # unscale prediction?
         return y                                          # return prediction y for data vector x
 
@@ -240,6 +241,7 @@ if __name__ == '__main__':
     # (i) generate data
     N=100
     w0,w1=4,2                 # parameters of line
+    np.random.seed(42)
     X=np.zeros((N,1))         # x data: allocate Nx1 matrix as numpy ndarray
     X[:,0]=np.arange(0,50.0,50.0/N)  # equidistant sampling of the interval [0,50)
     T=np.zeros(N)             # target values: allocate length-N vector as numpy ndarray
@@ -258,7 +260,7 @@ if __name__ == '__main__':
     print("\n-----------------------------------------")
     print("Do a Least-Squares-Regression")
     print("-----------------------------------------")
-    lmbda=0;
+    lmbda=0
     lsr = LSRRegressifier(lmbda,phi)
     lsr.fit(X,T)
     print("lsr.W_LSR=",lsr.W_LSR)        # weight vector (should be approximately [w0,w1]=[4,2])
@@ -281,4 +283,4 @@ if __name__ == '__main__':
 
     # do S-fold crossvalidation
     MAE = knnr.crossvalidate(S,X,T)
-    print("KNNRegression cross-validation: MAE=",MAE[0],"MAPE=",MAE[1]) 
+    print("KNNRegression cross-validation: MAE=",MAE[0],"MAPE=",MAE[1],"\n") 
