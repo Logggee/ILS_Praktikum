@@ -57,10 +57,11 @@
 
 ## AUfgabe 3
 ### a)
-* Die N = 10 Trainingsdaten sind mit dem Abstand 0.11 zwischen 0 und 1 als Sinus verteilt. Dazu kommt ein Normalverteilter Noise der für jeden Datenpunkt dazu addiert wird. $f(x) = c*sin(2*\pi*f*X+\phi_0)+ \frac{1}{\sigma\sqrt{2\pi}}*e^{-0,5(\frac{x-\mu}{\sigma})^2}$
+* Die N = 10 Trainingsdaten sind mit dem Abstand 0.11 zwischen 0 und 1 als Sinus verteilt. Dazu kommt ein Normalverteilter Noise der für jeden Datenpunkt dazu addiert wird. $f(x) = c*sin(2*\pi*f*X+\phi_0)+ \frac{1}{\sigma\sqrt{2\pi}}+e^{-0,5(\frac{x-\mu}{\sigma})^2}$
 * $lambda = lambda\_scale * (10^{lambda\_log10})$
     * lambda_scale ist ein Skalierungsfaktor für den Regularisierungsparameter
     * lmbda_log10 ist der logaryhthmus des Regularisierungsparameter
+    * Die Unterteilung dient dazu um eine Grobe und eine feine Skalierung/Einstellmöglichkeit zu haben. Mit Lambda_log10 kann ein logarithmisches vielfaches eingestellt werden und mit lambda_scale dieses dann skaliert bzw noch fein justiert werden.
 * Die Unterschiedlichen Kurven stehen für folgendes:
     * Blau gestrichelt Kurve: Ist die wahre Funktionskurve
     * Rote Kurve: Ist die Least Squares Regression Modellkurve
@@ -71,10 +72,71 @@
     * N: Stellt die Anzahl an Datenpunkte für Training und Testen ein.
     * sd_noise: Reguliert den Noise der auf die Daten addiert wird.
 * **Experiment 1 N = 10**: Ohne Regularisierung kommt es zum Overfitting, da der Polynomgrad nahe der Anzahl den Datenpunkte ist.
-    * Ohne Regularisierung: ![MAE Trainigs und Tetsdaten](BilderAusarbeitung/MAEivisit.png "Ohne Regularisierung")
-    * Lambda Optimiert LSR: ![Experiment 1 Optimierung LSR](BilderAusarbeitung/Experiment1LSR.png "Lambda Optimiert LSR")
-    * K Optimiert KNN: ![Experiment 1 Ptimierung KNN](BilderAusarbeitung/Experiment1KNN.png "K Optimiert KNN")
+    * Ohne Regularisierung: 
+    ![MAE Trainigs und Tetsdaten](BilderAusarbeitung/MAEivisit.png "Ohne Regularisierung")
+    * Lambda Optimiert LSR: 
+    ![Experiment 1 Optimierung LSR](BilderAusarbeitung/Experiment1LSR.png "Lambda Optimiert LSR")
+    * K Optimiert KNN: 
+    ![Experiment 1 Ptimierung KNN](BilderAusarbeitung/Experiment1KNN.png "K Optimiert KNN")
     * Für die Datenmenge N = 10 funktioniert die LSR Regression besser.
 * **Experiment 2 N = 20**:
-    * Lambda Optimiert LSR: ![Experiment 2 Optimierung LSR](BilderAusarbeitung/Experiment2LSR.png "Lambda Optimiert LSR")
-    * K Optimiert KNN: ![Experiment 2 Ptimierung KNN](BilderAusarbeitung/Experiment2KNN.png "K Optimiert KNN")
+    * Lambda Optimiert LSR: 
+    ![Experiment 2 Optimierung LSR](BilderAusarbeitung/Experiment2LSR.png "Lambda Optimiert LSR")
+    * K Optimiert KNN: 
+    ![Experiment 2 Ptimierung KNN](BilderAusarbeitung/Experiment2KNN.png "K Optimiert KNN")
+* **Experiment 3 N = 500**:
+    * Lambda Optimiert LSR: 
+    ![Experiment 3 Optimierung LSR](BilderAusarbeitung/Experiment3LSR.png "Lambda Optimiert LSR")
+    * K Optimiert KNN: 
+    ![Experiment 3 Ptimierung KNN](BilderAusarbeitung/Experiment3KNN.png "K Optimiert KNN")
+
+## b)
+* Es gibt drei Möglichkeiten die Trainingsdaten zu generieren:
+    * 2-Dimensionale Sinusfunktion $f(x_1,x_2)=c*sin(2*\pi*f_1*x_1+f_2*x_2+\phi_0)+e^{-0,5(\frac{x-\mu}{\sigma})^2}$
+    * 2-Dimensionale SI-Funktion $f(x_1,x_2)=c*si(2*\pi*f*r+\phi_0)+e^{-0,5(\frac{x-\mu}{\sigma})^2}$
+    * 2-Dimensionale Ebene $f(x_1,x_2)=c*x_1+d*x_2+e^{-0,5(\frac{x-\mu}{\sigma})^2}$
+* Azimuth dreht den Plot um seine Z-Achse und Elevation dreht den Plot um seine Y-Achse.
+* Da sich die Daten in einem 2-Dimensionalen Raum befinden, zum Beispiel auf einer Ebene, wird durch die Wurzel erzielt das in alle Richtungen gleiche viele Daten verteilt sind. Beispeil auf einer Ebene sind in beide Richtungen der Ebene gleich viele Datenpunkte vorhanden und es ist nicht mögliche eine Zahl am Slider einzustellen ohne eine gleichmäßige Verteilung.
+* Neue Funktionen im Skript sind:
+    * Slider für Azimuth
+    * Slider für Elevation
+    * Die Datenanzahl N wird nun durch $\sqart(N)$ eingestellt
+    * Warscheinlichkeitsverteilung der Trainingsdaten jetzt mit Sin, SI, und Ebnen FUnktion
+    * Änderungen in der step() Funktion um nun die Modelle mit 2-D Daten zu Trainierung und auszuwerten
+### Plane mit N = 10
+* Ohne Regularisierung: 
+    ![Experiment 1A LSR Ohne Regularisierung](BilderAusarbeitung/Experiment1ALSR.png "Ohne Regularisierung")
+* Lambda Optimiert LSR: 
+    ![Experiment 1A Optimierung LSR](BilderAusarbeitung/Experiment1ALSRML.png "Lambda Optimiert LSR")
+* K Optimiert KNN:
+    ![Experiment 1A Optimiert KNN](BilderAusarbeitung/Experiment1AKNN.png "K Optimiert KNN")
+* Bei N = 100 Daten funktioniert die KNN Regression besser als die LSR Regression.
+### Sin mit N = 10
+* Lambda Optimiert LSR: 
+    ![Experiment 1B Optimierung LSR](BilderAusarbeitung/Experiment1BLSR.png "Lambda Optimiert LSR")
+* K Optimiert KNN:
+    ![Experiment 1B Optimiert KNN](BilderAusarbeitung/Experiment1BKNN.png "K Optimiert KNN")
+### SI mit N = 10
+* Lambda Optimiert LSR: 
+    ![Experiment 1C Optimierung LSR](BilderAusarbeitung/Experiment1CLSR.png "Lambda Optimiert LSR")
+* K Optimiert KNN:
+    ![Experiment 1C Optimiert KNN](BilderAusarbeitung/Experiment1CKNN.png "K Optimiert KNN")
+
+### Plane mit N = 30
+* Lambda Optimiert LSR: 
+    ![Experiment 2A Optimierung LSR](BilderAusarbeitung/Experiment2ALSR.png "Lambda Optimiert LSR")
+* K Optimiert KNN:
+    ![Experiment 2A Optimiert KNN](BilderAusarbeitung/Experiment2AKNN.png "K Optimiert KNN")
+* Bei N = 100 Daten funktioniert die KNN Regression besser als die LSR Regression.
+### Sin mit N = 30
+* Lambda Optimiert LSR: 
+    ![Experiment 2B Optimierung LSR](BilderAusarbeitung/Experiment2BLSR.png "Lambda Optimiert LSR")
+* K Optimiert KNN:
+    ![Experiment 2B Optimiert KNN](BilderAusarbeitung/Experiment2BKNN.png "K Optimiert KNN")
+### SI mit N = 30
+* Lambda Optimiert LSR: 
+    ![Experiment 2C Optimierung LSR](BilderAusarbeitung/Experiment2CLSR.png "Lambda Optimiert LSR")
+* K Optimiert KNN:
+    ![Experiment 2C Optimiert KNN](BilderAusarbeitung/Experiment2CKNN.png "K Optimiert KNN")
+* Durch Optimieren des Polynomgrades bis Grad = 15 wurde keien nennenswerte verbesserung erzielt.
+
