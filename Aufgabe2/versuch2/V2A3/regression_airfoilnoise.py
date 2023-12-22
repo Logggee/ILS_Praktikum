@@ -13,26 +13,26 @@ from Regression import *
 # (I) Hyper-Parameters
 # (I.a) Hyper-Parameters for evaluation
 seed=42           # define seed for random number generator
-modeltype='lsr'   # define which model to evaluate (either 'lsr' or 'knn')
+modeltype='knn'   # define which model to evaluate (either 'lsr' or 'knn')
 S=3               # do S-fold cross-validation
 N_pred=5;         # number of predictions on the training set for testing
 x_test_1 = [1250,11,0.2,69.2,0.0051];   # test vector 1
 x_test_2 = [1305,8,0.1,57.7,0.0048];    # test vector 2
 # (I.b) Hyper-Parameters for linear regression
 deg=6             # degree of basis function polynomial phi(x) 
-lmbda=1           # regularization parameter (lambda>0 avoids also singularities)
+lmbda=3           # regularization parameter (lambda>0 avoids also singularities)
 flagSTD=1         # if >0 then standardize data before training (i.e., scale X to mean value 0 and standard deviation 1)
 eps=0.05          # parameter to recognize badly conditioned matrixes
 # (I.c) Hyper-Parameters for KNN regression
 K=1               # K for K-Nearest Neighbors
 flagKLinReg = 1   # if flag==1 and K>=D then do a linear regression of the KNNs to make prediction
-lr_deg=4          # degree of basis function polynomials for KNN-regression 
-lr_lambda=0       # regularization parameter (lambda>0 avoids also singularities)
-lr_flagSTD=0      # if >0 then standardize data before training (i.e., scale X to mean value 0 and standard deviation 1)
-lr_eps=0.01       # parameter to recognize badly conditioned matrixes
+lr_deg=5          # degree of basis function polynomials for KNN-regression 
+lr_lambda=5       # regularization parameter (lambda>0 avoids also singularities)
+lr_flagSTD=1      # if >0 then standardize data before training (i.e., scale X to mean value 0 and standard deviation 1)
+lr_eps=0.05       # parameter to recognize badly conditioned matrixes
 
 # (II) Load data 
-fname='/home/jan/Studium/Semester5/ILS/ILS_Praktikum/Aufgabe2/versuch2/V2A3/AirfoilSelfNoise/airfoil_self_noise.xls'
+fname='AirfoilSelfNoise/airfoil_self_noise.xls'
 airfoil_data = pd.read_excel(fname,0); # load data as pandas data frame 
 T = airfoil_data.values[:,5]           # target values = noise load (= column 5 of data table)
 X = airfoil_data.values[:,:5]          # feature vectors (= column 0-4 of data table)

@@ -141,3 +141,10 @@
 * Durch Optimieren des Polynomgrades bis Grad = 15 wurde keien nennenswerte verbesserung erzielt.
 
 ## c)
+* Optimierung mit LSR Regression:
+![MAPE](BilderAusarbeitung/AirfoilLSR1.png)
+![Hyperparameter](BilderAusarbeitung/AirfoilLSR2.png)
+* Optimierung mit KNN Regression:
+![MAPE](BilderAusarbeitung/AirfoilKNN1.png)
+![Hyperparameter](BilderAusarbeitung/AirfoilKNN2.png)
+Die Ergebnisse der KNN Regression waren besser.
