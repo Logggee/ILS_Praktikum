@@ -71,5 +71,3 @@ print("Prediction for x_test_2 is y=", regm.predict(x_test_2))
 print("IV.3) S=",S,"fold Cross Validation:")
 MAE,MAPE = regm.crossvalidate(S,X,T)
 print("MAE=",MAE, "MAPE=",MAPE) 
-
-

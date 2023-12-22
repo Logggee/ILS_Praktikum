@@ -140,3 +140,4 @@
     ![Experiment 2C Optimiert KNN](BilderAusarbeitung/Experiment2CKNN.png "K Optimiert KNN")
 * Durch Optimieren des Polynomgrades bis Grad = 15 wurde keien nennenswerte verbesserung erzielt.
 
+## c)
