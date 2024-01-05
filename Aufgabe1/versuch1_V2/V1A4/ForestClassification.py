@@ -16,7 +16,7 @@ def hz_cubic(x):
     return x ** 3                                           # !!REPLACE!! 
 
 # (I) Load data 
-forestdata  = pd.read_csv('/home/jan/Studium/Semester5/ILS/ILS_Praktikum/Aufgabe1/versuch1_V2/V1A4/training.csv'); # load data as pandas data frame 
+forestdata  = pd.read_csv('training.csv'); # load data as pandas data frame 
 classlabels = ['s','h','d','o'];                                      # possible class labels (C=4) 
 classidx    = {classlabels[i]:i for i in range(len(classlabels))}     # dict for mapping classlabel to index 
 C           = len(classlabels)        # number of classes (Note: K is now the number of nearest-neighbors!!!!!!)
@@ -42,7 +42,7 @@ if 0:
             K=K_list[j]
             t1=perf_counter()              # start time
             knnc = FastKNNClassifier(C, K)          # !!REPLACE!! create KNN classifier with kd-trees
-            knnc.fit(X, T)
+            #knnc.fit(X, T)
             err,Cp = knnc.crossvalidate(S, X, T)   # !!REPLACE!! do S-fold cross validation for data X,T
             t2=perf_counter()              # end time
             time_comp=t2-t1                # computing time in seconds
@@ -74,7 +74,7 @@ if 1:
             print("S=",S,"hz=",hz)
             #!!REPLACE/INSERT YOUR CODE!!
             mpl = KernelMLPClassifier(C, hz)
-            mpl.fit(X, T)
+            #mpl.fit(X, T)
             err, Cp = mpl.crossvalidate(S, X, T)
             if err < minerr:
                 minerr = err
