@@ -6,8 +6,8 @@ import numpy as np
 
 # Hyperparameter
 S = 5
-lmbda = 1e-5
-neuronsPerLayer = 5
+lmbda = 1
+neuronsPerLayer = 10
 layers = 2
 
 #Read Data und transform in to numpy
@@ -26,7 +26,7 @@ X = scaler.transform(X)
 
 # create MLP and Cross Validate it
 crossValid = StratifiedKFold(n_splits=S)
-mlp = MLPClassifier(solver="lbfgs", alpha=lmbda, hidden_layer_sizes=(neuronsPerLayer, layers), random_state=1)
+mlp = MLPClassifier(solver="lbfgs", alpha=lmbda, hidden_layer_sizes=(neuronsPerLayer, layers), random_state=1, activation='tanh', max_iter=500)
 
 for i, (train_index, test_index) in enumerate(crossValid.split(X,T)):
     X_train, X_test = X[train_index], X[test_index]         # numpay arrays können mit listen indiziert werden

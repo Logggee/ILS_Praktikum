@@ -47,7 +47,7 @@ def backPropagateErrors(z_1,z_2,t,W1,W2,flagBiasUnit=1): # backpropagate error s
     """
     y=z_2                                     # layer 2 is output layer
     delta_2 = y - t                           # REPLACE DUMMY CODE: Initializing error signals in output layer 2  
-    alpha_1=np.dot(W2.T, delta_2)[:1]         # REPLACE DUMMY CODE: compute error potentials in hidden layer 1 by backpropagating errors delta_2
+    alpha_1=np.dot(W2.T, delta_2)             # REPLACE DUMMY CODE: compute error potentials in hidden layer 1 by backpropagating errors delta_2
     h_prime=(1.0 - np.multiply(z_1, z_1))     # REPLACE DUMMY CODE: factor (1-z_1.*z_1) is h'(a) for tanh sigmoid function 
     delta_1=np.multiply(h_prime, alpha_1)     # REPLACE DUMMY CODE: compute error signals in hidden layer 1
     if flagBiasUnit>0: delta_1 = delta_1[:-1] # remove last error signal corresponding to the bias unit ?  
@@ -68,7 +68,7 @@ def doLearningStep(W1,W2,xn,tn,eta,lmbda_by_N=0,flagBiasUnit=1): # do one backpr
     z_1    ,z_2    =forwardPropagateActivity(xn,W1,W2,flagBiasUnit);    # forward propagation of activity according to input vector xn
     delta_1,delta_2=backPropagateErrors(z_1,z_2,tn,W1,W2,flagBiasUnit); # get error signals by backpropagation
     nablaED_1 = np.outer(delta_1, xn)                                   # REPLACE DUMMY CODE: gradient of data error function for first layer
-    nablaED_2 = np.outer(delta_2, z_1)                                  # REPLACE DUMMY CODE: gradient of data error function for second layer
+    nablaED_2 = np.outer(delta_2, np.outer(z_1, [flagBiasUnit]))                                  # REPLACE DUMMY CODE: gradient of data error function for second layer
     W1=W1 * (1.0 - lmbda_by_N * eta) - eta * nablaED_1                  # REPLACE DUMMY CODE: update weights for first layer with "weight decay" regularization
     W2=W2 * (1.0 - lmbda_by_N * eta) - eta * nablaED_2                  # REPLACE DUMMY CODE: update weights for second layer with "weight decay" regularization
     return W1,W2                                 # return new weights
@@ -150,11 +150,11 @@ if __name__ == '__main__':
 
     # (ii) Train MLP
     M=3                                # number of hidden units
-    flagBiasUnit=0                     # add an extra bias unit to hidden units?
+    flagBiasUnit=1                     # add an extra bias unit to hidden units?
     M_total=M                          # total number of hidden units...
     if flagBiasUnit>0: M_total=M+1     # ... including the bias unit?
-    eta=0.9                            # learning rate
-    lmbda=1                            # regularization coefficient
+    eta=1                            # learning rate
+    lmbda=0                            # regularization coefficient
     nEpochs=500                        # number of learning epochs
     contlevels=[-1,0,1]                # plot contour levels (of log-odds-ratio)
     epochs4plot=[-1,0,5,10,50,100,nEpochs-1] # learning epochs for which a plot will be made
