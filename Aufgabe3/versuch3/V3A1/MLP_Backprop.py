@@ -155,7 +155,7 @@ if __name__ == '__main__':
     if flagBiasUnit>0: M_total=M+1     # ... including the bias unit?
     eta=1                            # learning rate
     lmbda=0                            # regularization coefficient
-    nEpochs=500                        # number of learning epochs
+    nEpochs=50                        # number of learning epochs
     contlevels=[-1,0,1]                # plot contour levels (of log-odds-ratio)
     epochs4plot=[-1,0,5,10,50,100,nEpochs-1] # learning epochs for which a plot will be made
     gridX,gridY = np.meshgrid(np.arange(-3,5,0.1),np.arange(-3,3,0.1))  # mesh grid for plot

@@ -23,7 +23,7 @@ X = scaler.transform(X)
 
 # Create MLP and Cross Validate it
 crossValid = KFold(n_splits=S, shuffle=True, random_state=1)
-mlp = MLPRegressor(solver="lbfgs", alpha=lmbda, hidden_layer_sizes=(neuronsPerLayer, layers), random_state=1, max_iter=500)
+mlp = MLPRegressor(solver="adam", alpha=lmbda, hidden_layer_sizes=(neuronsPerLayer, layers), random_state=1, max_iter=500)
 
 for i, (train_index, test_index) in enumerate(crossValid.split(X, T)):
     X_train, X_test = X[train_index], X[test_index]
