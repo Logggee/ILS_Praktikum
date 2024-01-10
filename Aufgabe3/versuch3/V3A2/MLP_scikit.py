@@ -26,13 +26,12 @@ X = scaler.transform(X)
 
 # create MLP and Cross Validate it
 crossValid = StratifiedKFold(n_splits=S)
-mlp = MLPClassifier(solver="lbfgs", alpha=lmbda, hidden_layer_sizes=(neuronsPerLayer, layers), random_state=1, activation='tanh', max_iter=500)
 
 for i, (train_index, test_index) in enumerate(crossValid.split(X,T)):
     X_train, X_test = X[train_index], X[test_index]         # numpay arrays können mit listen indiziert werden
     T_train, T_test = T[train_index], T[test_index]
 
+    mlp = MLPClassifier(solver="lbfgs", alpha=lmbda, hidden_layer_sizes=(neuronsPerLayer, layers), random_state=1, activation='tanh', max_iter=500)
     mlp.fit(X_train, T_train)
 
     print(f'Fold {i+1}: Training Accuracy - {mlp.score(X_train, T_train)}, Test Accuracy - {mlp.score(X_test, T_test)}')
-

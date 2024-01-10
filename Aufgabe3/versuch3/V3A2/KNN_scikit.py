@@ -27,12 +27,12 @@ X = scaler.transform(X)
 
 # create MLP and Cross Validate it
 crossValid = StratifiedKFold(n_splits=S)
-knn = KNeighborsClassifier(n_neighbors=nNeighbours)
 
 for i, (train_index, test_index) in enumerate(crossValid.split(X,T)):
     X_train, X_test = X[train_index], X[test_index]         # numpay arrays can be indexed with a list
     T_train, T_test = T[train_index], T[test_index]
 
+    knn = KNeighborsClassifier(n_neighbors=nNeighbours)
     knn.fit(X_train, T_train)                               # train model with train data
 
     print(f'Fold {i+1}: Training Accuracy - {knn.score(X_train, T_train)}, Test Accuracy - {knn.score(X_test, T_test)}')    # evaluate model

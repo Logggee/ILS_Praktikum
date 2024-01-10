@@ -1,14 +1,14 @@
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import KFold
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
 import pandas as pd
 
 # Hyperparameters
-S = 10
-lmbda = 1e-5
-neuronsPerLayer = 100
-layers = 3
+S = 3
+lmbda = 10
+neuronsPerLayer = 200
+layers = 2
 
 # Read Data
 fname = 'airfoil.xls'
@@ -23,7 +23,7 @@ X = scaler.transform(X)
 
 # Create MLP and Cross Validate it
 crossValid = KFold(n_splits=S, shuffle=True, random_state=1)
-mlp = MLPRegressor(solver="lbfgs", alpha=lmbda, hidden_layer_sizes=(neuronsPerLayer, layers), random_state=1, max_iter=500)
+mlp = MLPRegressor(solver="adam", alpha=lmbda, hidden_layer_sizes=(neuronsPerLayer, layers), random_state=1, max_iter=2000)
 
 for i, (train_index, test_index) in enumerate(crossValid.split(X, T)):
     X_train, X_test = X[train_index], X[test_index]
@@ -31,11 +31,11 @@ for i, (train_index, test_index) in enumerate(crossValid.split(X, T)):
 
     mlp.fit(X_train, T_train)
 
-    # Use Mean Squared Error (MSE) for regression evaluation
+    # Use Mean Absolute Error (MAE) for regression evaluation
     train_predictions = mlp.predict(X_train)
     test_predictions = mlp.predict(X_test)
 
-    train_mse = mean_squared_error(T_train, train_predictions)
-    test_mse = mean_squared_error(T_test, test_predictions)
+    train_mae = mean_absolute_error(T_train, train_predictions)
+    test_mae = mean_absolute_error(T_test, test_predictions)
 
-    print(f'Fold {i+1}: Training MSE - {train_mse}, Test MSE - {test_mse}')
+    print(f'Fold {i+1}: Training MAE - {train_mae}, Test MAE - {test_mae}')

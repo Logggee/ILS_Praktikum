@@ -13,7 +13,7 @@ from Regression import *
 # (I) Hyper-Parameters
 # (I.a) Hyper-Parameters for evaluation
 seed=42           # define seed for random number generator
-modeltype='knn'   # define which model to evaluate (either 'lsr' or 'knn')
+modeltype='lsr'   # define which model to evaluate (either 'lsr' or 'knn')
 S=3               # do S-fold cross-validation
 N_pred=5;         # number of predictions on the training set for testing
 x_test_1 = [1250,11,0.2,69.2,0.0051];   # test vector 1
@@ -32,7 +32,7 @@ lr_flagSTD=1      # if >0 then standardize data before training (i.e., scale X t
 lr_eps=0.05       # parameter to recognize badly conditioned matrixes
 
 # (II) Load data 
-fname='AirfoilSelfNoise/airfoil_self_noise.xls'
+fname='AirfoilSelfNoise/airfoil_self_noise1.xls'
 airfoil_data = pd.read_excel(fname,0); # load data as pandas data frame 
 T = airfoil_data.values[:,5]           # target values = noise load (= column 5 of data table)
 X = airfoil_data.values[:,:5]          # feature vectors (= column 0-4 of data table)
