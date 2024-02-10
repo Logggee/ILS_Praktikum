@@ -27,13 +27,13 @@ train_images = np.expand_dims(train_images, axis=3)
 test_images = np.expand_dims(test_images, axis=3)
 
 # (iv) Define Network and Training Hyper-Parameters.
-num_filters = 4
-filter_size = 3
-pool_size = 2
-eta = 1e-4
+num_filters = 8
+filter_size = 5
+pool_size = 3
+eta = 0.01
 opt_alg=SGD(learning_rate=eta)
-batchsize=50
-epochs=5
+batchsize=64
+epochs=10
 
 # (v) Build the network model.
 model = Sequential([
@@ -80,3 +80,4 @@ print(test_labels[:5]) # [7, 2, 1, 0, 4]
 # (xii) view results using tensorboard: (type this into command shell, and then click the printed link)
 # tensorboard --logdir logs/fit
 # tensorboard --logdir=logs/fit --host localhost --port 8088
+model.summary()
