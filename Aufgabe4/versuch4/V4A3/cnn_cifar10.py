@@ -59,7 +59,8 @@ model.add(Dense(10, activation='softmax', name='layer_output'))            # out
 # (iii) compile and train model 
 # ********************************************************************
 # compile model
-opt = SGD(lr=0.00001, momentum=0.1)    # define optimizer
+# opt = SGD(lr=0.00001, momentum=0.1)    # define optimizer
+opt = Adam(learning_rate=0.001)  # Optimierungsalgorithmus: Adam mit Lernrate 0.001
 model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])   
 
 # train model
@@ -68,8 +69,10 @@ tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram
 history=model.fit(
     trainX,
     trainY,
-    batch_size=500,
-    epochs=5,
+    #batch_size=500,
+    batch_size=64,
+    #epochs=5,
+    epochs=20,
     validation_data=(testX,testY), 
     callbacks=[tensorboard_callback],
 )
