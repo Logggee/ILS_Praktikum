@@ -70,9 +70,9 @@ history=model.fit(
     trainX,
     trainY,
     #batch_size=500,
-    batch_size=64,
+    batch_size=200,
     #epochs=5,
-    epochs=20,
+    epochs=10,
     validation_data=(testX,testY), 
     callbacks=[tensorboard_callback],
 )
